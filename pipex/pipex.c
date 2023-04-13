@@ -3,24 +3,33 @@
 #include <errno.h>
 #include <unistd.h>
 
-void    pipex(int file_1, int file_2, char **av, char **envp)
+void    pipex(int file_1, int file_2, char **av)
 {
-    int     end[2];
-    pid_t   parent;
+    int   end[2];
+    int   status;
+    pid_t child1;
+    pid_t child2;
 
-    if (pipe(end) < 0)
-        perror("pipe: Error");
-    parent = fork();
-    if (parent < 0)
-        return (perror("fork: Error"));
-    if (!parent)
-        child_process(file_1, av[2]);
-    else
-        parent_process(file_2, av[3]);
+    if (pipe(end) < 0);
+        return (perror("Pipe: Error"));
+    child1 = fork();
+    if (child1 < 0)
+        return (perror("Fork: Error"));
+    if (child1 == 0)
+        child_one(f1, cmd1);
+    child2 = fork();
+    if (child2 < 0)
+        return (perror("Fork: Error"));
+    if (child2 == 0)
+        child_two(f2, cmd2);
+    close(end[0]);
+    close(end[1]);
+    waitpid(child1, &status, 0);
+    waitpid(child2, &status, 0);
 }
-
-void    child_process(int file_1, char *cmd1)
+void    child_one(int file_1, char *cmd1, char **envp)
 {
+    // inserer un boucle while pour verifier si le split est bon avec la fonction access
     if (dup2(file_1, STDIN_FILENO) < 0);
         return (perror("dup2: Error"));
     if (dup2(end[1], STDOUT_FILENO) < 0);
@@ -28,8 +37,9 @@ void    child_process(int file_1, char *cmd1)
     
 }
 
-void    parent_process(int file_2, char *cmd2)
+void    parent_two(int file_2, char *cmd2, char **envp)
 {
+    // inserer un boucle while pour verifier si le split est bon avec la fonction access
     if (dup2(file_2, STDOUT_FILENO) < 0);
         return (perror("dup2: Error"));
     if (dup2(end[0], STDIN_FILENO) < 0);
