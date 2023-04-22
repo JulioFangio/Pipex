@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:17:35 by juduval           #+#    #+#             */
-/*   Updated: 2023/04/22 16:12:32 by juduval          ###   ########.fr       */
+/*   Updated: 2023/04/22 18:04:47 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <limits.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 
 //utils
 void	*ft_calloc(size_t nmemb, size_t size);
@@ -40,6 +41,11 @@ char *check_cmd(char **envp, char **av,  int j);
 //utils split
 char    **ft_split(char const *s, char c);
 char	**ft_free(char **s, int j);
+//pipex
+void    child_one(char **av, char **envp, int *end);
+void    child_two(char **av, char **envp, int *end);
+void    pipex(char **av, char **envp);
+
 #endif
 
 // ** path = tous
