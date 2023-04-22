@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:57:56 by juduval           #+#    #+#             */
-/*   Updated: 2023/04/14 18:49:17 by juduval          ###   ########.fr       */
+/*   Updated: 2023/04/22 14:29:22 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,6 @@ char    *find_path(char **envp)
             return (&envp[i][5]);
     }
 	return (NULL);
-}
-
-char    **path_cmd(char **paths, char *cmd)
-{
-    int i;
-
-    i = -1;
-    while(paths[++i])
-        paths[i] = ft_strjoin(paths[i], cmd);
-    return (paths);
 }
 
 char    **gather_cmds(char **av)
@@ -55,4 +45,31 @@ char    **gather_cmds(char **av)
     return (list_cmds);
 }
 
+char    **path_cmd(char **paths, char *cmd)
+{
+    int i;
+
+    i = -1;
+    while(paths[++i])
+        paths[i] = ft_strjoin(paths[i], cmd);
+    return (paths);
+}
+
+char *check_cmd(char **envp, char **av,  int j)
+{
+    int i;
+    char **paths;
+    char **cmds;
+    
+    i = 0;
+    cmds = gather_cmds(av);
+    paths = path_cmd(ft_split(find_path(envp), ':'), cmds[j]);
+    while (paths[i])
+    {
+        if (acces(paths[i], F_OK | X_OK) == 0)
+            return (paths[i]);
+        i++;
+    }
+    return(NULL);
+}
 // acces(cmds[i], F_OK | X_OK) < 0)

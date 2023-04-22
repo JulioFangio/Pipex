@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:12:21 by juduval           #+#    #+#             */
-/*   Updated: 2023/04/14 15:04:24 by juduval          ###   ########.fr       */
+/*   Updated: 2023/04/22 16:12:24 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,33 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strcpy(ns, s1);
 	ft_strcpy(ns + l_s1, s2);
 	return (ns);
+}
+
+char	**ft_free_2(char **s)
+{
+	int	j;
+
+	j = 0;
+	while(s[j])
+		j++;
+	while (j >= 0)
+	{
+		free(s[j]);
+		j--;
+	}
+	free(s);
+	return (NULL);
+}
+
+int	write_error(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(2, &str[i], 1);
+		i++;
+	}
+	return (0);
 }
