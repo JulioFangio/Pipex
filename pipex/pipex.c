@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:36:45 by juduval           #+#    #+#             */
-/*   Updated: 2023/04/22 19:29:29 by juduval          ###   ########.fr       */
+/*   Updated: 2023/04/25 19:09:27 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void    child_one(char **av, char **envp, int *end)
     // char *test[] = {"/usr/bin/ls", "-la", NULL};
 
     f1 = open(av[1], O_RDONLY);
-    cmd1 = check_cmd(envp, av, 0);
-    if (!cmd1)
+    cmd1 = check_cmd(envp, av[2]);
+    if (access(cmd1, F_OK | X_OK) != 0)
         return (perror("access error"));
     if (dup2(f1, STDIN_FILENO) < 0)
         return (perror("dup2 error"));
@@ -31,6 +31,7 @@ void    child_one(char **av, char **envp, int *end)
     close(f1);
     execve(cmd1, ft_split(av[2], ' '), envp);
     free(cmd1);
+    exit(1);
 }
 
 void    child_two(char **av, char **envp, int *end)
@@ -40,8 +41,9 @@ void    child_two(char **av, char **envp, int *end)
     // char *test[] = {"/usr/bin/cat", NULL};
 
     f2 = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
-    cmd2 = check_cmd(envp, av, 1);
-    if (!cmd2)
+    cmd2 = check_cmd(envp, av[3]);
+    // printf("%s\n", cmd2);
+    if (access(cmd2, F_OK | X_OK) != 0)
         return (perror("access error"));
     if (dup2(end[0], STDIN_FILENO) < 0)
         return (perror("dup2 error"));
@@ -52,6 +54,7 @@ void    child_two(char **av, char **envp, int *end)
     close(f2);   
     execve(cmd2, ft_split(av[3], ' '), envp);
     free(cmd2);
+    exit(1);
 }
 
 void    pipex(char **av, char **envp)
@@ -75,6 +78,8 @@ void    pipex(char **av, char **envp)
         child_two(av, envp, end);
     close(end[0]);
     close(end[1]);
+    close(1);
+    close(2);
     waitpid(child1, &status, 0);
     waitpid(child2, &status, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:17:35 by juduval           #+#    #+#             */
-/*   Updated: 2023/04/22 18:04:47 by juduval          ###   ########.fr       */
+/*   Updated: 2023/04/25 17:10:10 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ char	**ft_free_2(char **s);
 int 	write_error(char *str);
 //utils paths
 char    *find_path(char **env);
-char    **gather_cmds(char **av);
 char    **path_cmd(char **paths, char *cmd);
-char *check_cmd(char **envp, char **av,  int j);
+char    *check_cmd(char **envp, char *av);
 //utils split
 char    **ft_split(char const *s, char c);
 char	**ft_free(char **s, int j);

@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:57:56 by juduval           #+#    #+#             */
-/*   Updated: 2023/04/22 19:28:50 by juduval          ###   ########.fr       */
+/*   Updated: 2023/04/25 19:02:26 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,53 +25,41 @@ char    *find_path(char **envp)
 	return (NULL);
 }
 
-char    **gather_cmds(char **av)
-{
-    char **list_cmds;
-    int i;
-    int j;
-    
-    i = 2;
-    j = 0;
-    list_cmds = ft_calloc(3, sizeof(char *));
-    if (!list_cmds)
-        return (NULL);
-    while(av[i] && i < 4)
-    {
-        list_cmds[j] = ft_strdup(av[i]);
-        i++;
-        j++;
-    }
-    return (list_cmds);
-}
-
 char    **path_cmd(char **paths, char *cmd)
 {
     int i;
 
     i = -1;
+    
     while(paths[++i])
+    {
         paths[i] = ft_strjoin(paths[i], cmd);
+        printf("%s\n", paths[i]);
+    }
     return (paths);
 }
 
-char *check_cmd(char **envp, char **av,  int j)
+char *check_cmd(char **envp, char *av)
 {
-    int i;
-    char **paths;
-    char **cmds;
-    
+    int     i;
+    char    **paths;
+    char    *cmd;
+    char    *res;
     i = 0;
-    cmds = gather_cmds(av);
-    paths = path_cmd(ft_split(find_path(envp), ':'), cmds[j]);
+    cmd = av;
+    if (access(cmd, F_OK | X_OK) == 0)
+        return (cmd);
+    paths = path_cmd(ft_split(find_path(envp), ':'), cmd);
     while (paths[i])
     {
         if (access(paths[i], F_OK | X_OK) == 0)
-            return (paths[i]);
+        {
+            res = ft_strdup(paths[i]);
+            ft_free_2(paths);
+            return (res);
+        }
         i++;
     }
     ft_free_2(paths);
-    ft_free_2(cmds);
-    return(NULL);
+    return(cmd);
 }
-// acces(cmds[i], F_OK | X_OK) < 0)
