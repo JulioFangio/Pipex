@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:57:56 by juduval           #+#    #+#             */
-/*   Updated: 2023/04/27 19:07:23 by juduval          ###   ########.fr       */
+/*   Updated: 2023/04/27 19:40:59 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ char *check_cmd(char **envp, char *av)
     split_cmd = ft_split_bis(av, ' ');
     // printf("split cmd est :%s\n", split_cmd[0]);
     printf("je passe la\n");
-    if (access(av, F_OK | X_OK) == 0)
+    if (access(split_cmd[0], F_OK | X_OK) == 0)
     {
-        // printf("la cmd seule est :%s\n", av);
+        res = ft_strdup(split_cmd[0]);
+        printf("la cmd seule est :%s\n", res);
         ft_free_2(split_cmd);
-        return (av);
+        return (res);
     }
     printf("et la \n");
     paths = path_cmd(ft_split(find_path(envp), ':'), split_cmd[0]);

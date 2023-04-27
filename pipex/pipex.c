@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:36:45 by juduval           #+#    #+#             */
-/*   Updated: 2023/04/27 18:30:11 by juduval          ###   ########.fr       */
+/*   Updated: 2023/04/27 19:51:57 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,13 @@ void    child(char **av, char **envp, int *end)
     char    *cmd1;
     char    **split_cmd;
 
-    f1 = open(av[1], O_RDONLY);
+    if ((f1 = open(av[1], O_RDONLY)) == -1)
+    {    
+        close(end[0]);
+        close(end[1]);
+        close(f1);  
+        exit(1);
+    }
     cmd1 = check_cmd(envp, av[2]);
     split_cmd = ft_split_bis(av[2], ' ');
     if (access(cmd1, F_OK | X_OK) != 0)
@@ -36,13 +42,21 @@ void    child(char **av, char **envp, int *end)
     exit(1);
 }
 
+//faire une fonction close all
+
 void    main_process(char **av, char **envp, int *end)
 {
     int     f2;
     char    *cmd2;
     char    **split_cmd;
 
-    f2 = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
+    if ((f2 = open(av[4], O_CREAT | O_RDWR | O_TRUNC, 0644)) == -1)
+    {    
+        close(end[0]);
+        close(end[1]);
+        close(f2);  
+        exit(1);
+    }
     cmd2 = check_cmd(envp, av[3]);
     split_cmd = ft_split_bis(av[3], ' ');
     if (access(cmd2, F_OK | X_OK) != 0)
