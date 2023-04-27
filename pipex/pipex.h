@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:17:35 by juduval           #+#    #+#             */
-/*   Updated: 2023/04/25 17:10:10 by juduval          ###   ########.fr       */
+/*   Updated: 2023/04/27 18:27:26 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ char    **path_cmd(char **paths, char *cmd);
 char    *check_cmd(char **envp, char *av);
 //utils split
 char    **ft_split(char const *s, char c);
+char	**ft_split_bis(char const *s, char c);
 char	**ft_free(char **s, int j);
 //pipex
-void    child_one(char **av, char **envp, int *end);
-void    child_two(char **av, char **envp, int *end);
+void    child(char **av, char **envp, int *end);
+void    main_process(char **av, char **envp, int *end);
 void    pipex(char **av, char **envp);
 
 #endif
