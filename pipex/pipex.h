@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:17:35 by juduval           #+#    #+#             */
-/*   Updated: 2023/04/27 18:27:26 by juduval          ###   ########.fr       */
+/*   Updated: 2023/05/03 15:59:04 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int     ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strdup(const char *s);
 //utils 2
 char	*ft_strjoin(char const *s1, char const *s2);
-char	**ft_free_2(char **s);
+void    ft_free_2(char **s);
 int 	write_error(char *str);
 //utils paths
 char    *find_path(char **env);

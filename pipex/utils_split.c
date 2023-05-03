@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:35:31 by juduval           #+#    #+#             */
-/*   Updated: 2023/04/12 18:55:41 by juduval          ###   ########.fr       */
+/*   Updated: 2023/05/03 18:00:55 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static	char	*ft_strdupbis(const char *s, char sep)
 	size = 0;
 	while (s[size] != sep && s[size])
 		size++;
-	copy = ft_calloc(size + 2, sizeof(char));
+	copy = malloc(size + 2 * sizeof(char));
 	if (!(copy))
 		return (NULL);
 	size = 0;
@@ -58,6 +58,7 @@ static	char	*ft_strdupbis(const char *s, char sep)
 		size++;
 	}
 	copy[size] = '/';
+	copy[size + 1] = '\0';
 	return (copy);
 }
 

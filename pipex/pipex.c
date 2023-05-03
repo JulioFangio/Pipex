@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:36:45 by juduval           #+#    #+#             */
-/*   Updated: 2023/04/27 19:51:57 by juduval          ###   ########.fr       */
+/*   Updated: 2023/05/03 17:25:05 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,22 @@ void    child(char **av, char **envp, int *end)
     {    
         close(end[0]);
         close(end[1]);
-        close(f1);  
+        perror("could not open file, error");  
         exit(1);
     }
     cmd1 = check_cmd(envp, av[2]);
     split_cmd = ft_split_bis(av[2], ' ');
     if (access(cmd1, F_OK | X_OK) != 0)
-        return (perror("access error 1"));
+        perror("access error 1");
     if (dup2(f1, STDIN_FILENO) < 0)
-        return (perror("dup2 error"));
+        perror("dup2 error");
     if (dup2(end[1], STDOUT_FILENO) < 0)
-        return(perror("dup2 error"));
+        perror("dup2 error");
     close(end[0]);
     close(end[1]);
     close(f1);
     execve(cmd1, split_cmd, envp);
     ft_free_2(split_cmd);
-    // free(cmd1);
-    exit(1);
 }
 
 //faire une fonction close all
@@ -54,24 +52,22 @@ void    main_process(char **av, char **envp, int *end)
     {    
         close(end[0]);
         close(end[1]);
-        close(f2);  
+        perror("could not open file, error");    
         exit(1);
     }
     cmd2 = check_cmd(envp, av[3]);
     split_cmd = ft_split_bis(av[3], ' ');
     if (access(cmd2, F_OK | X_OK) != 0)
-        return (perror("access error 2"));
+        perror("access error 2");
     if (dup2(end[0], STDIN_FILENO) < 0)
-        return (perror("dup2 error"));
+        perror("dup2 error");
     if (dup2(f2, STDOUT_FILENO) < 0)
-        return (perror("dup2 error"));
+        perror("dup2 error");
     close(end[0]);
     close(end[1]);
     close(f2);   
     execve(cmd2, split_cmd, envp);
     ft_free_2(split_cmd);
-    free(cmd2);
-    // exit(1);
 }
 
 void    pipex(char **av, char **envp)
@@ -96,9 +92,6 @@ void    pipex(char **av, char **envp)
         main_process(av, envp, end);
     close(end[0]);
     close(end[1]);
-    close(0);
-    close(1);
-    close(2);
     waitpid(child_nb, &status, 0);
     // waitpid(child2, &status, 0);
 }
