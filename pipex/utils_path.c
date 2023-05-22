@@ -6,7 +6,7 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 15:57:56 by juduval           #+#    #+#             */
-/*   Updated: 2023/05/03 18:53:50 by juduval          ###   ########.fr       */
+/*   Updated: 2023/05/22 22:49:37 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char    *find_path(char **envp)
     {
         if (!ft_strncmp("PATH=", envp[i], 5))
         {
-            printf("%s\n", envp[i]);
+            // printf("%s\n", envp[i]);
             return (&envp[i][5]);
         }
     }
@@ -48,10 +48,9 @@ char *check_cmd(char **envp, char *av)
     i = 0;
     split_cmd = ft_split_bis(av, ' ');
     if (access(split_cmd[0], F_OK | X_OK) == 0)
-    {
-        ft_free_2(split_cmd);
         return (split_cmd[0]);
-    }
+    if (envp == NULL || envp[0] == NULL)
+        return (ft_free_2(split_cmd), av);
     paths = ft_split(find_path(envp), ':');
     while (paths[i])
     {
