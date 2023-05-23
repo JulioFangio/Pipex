@@ -6,13 +6,13 @@
 /*   By: juduval <juduval@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:12:21 by juduval           #+#    #+#             */
-/*   Updated: 2023/05/03 17:26:20 by juduval          ###   ########.fr       */
+/*   Updated: 2023/05/23 13:11:47 by juduval          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static	char	*ft_strcpy(char *dest, const char *src)
+char	*ft_strcpy(char *dest, const char *src)
 {
 	size_t	i;
 
@@ -47,14 +47,23 @@ void	ft_free_2(char **s)
 	int	j;
 
 	j = -1;
-	while(s[++j])
+	while (s[++j])
 		free(s[j]);
-		// j++;
-	// while (j >= 0)
-	// {
-		// j--;
-	// }
 	free(s);
+}
+
+void	ft_free_both(char **s, char **s2)
+{
+	int	j;
+
+	j = -1;
+	while (s[++j])
+		free(s[j]);
+	free(s);
+	j = -1;
+	while (s2[++j])
+		free(s2[j]);
+	free(s2);
 }
 
 int	write_error(char *str)
